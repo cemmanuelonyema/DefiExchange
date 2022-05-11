@@ -3,25 +3,26 @@ require("dotenv").config({ path: ".env" });
 const { CRYPTO_DEVS_NFT_CONTRACT_ADDRESS } = require("../constants");
 
 async function main() {
-  // Address of the Crypto Devs NFT contract that you deployed in the previous module
-  const cryptoDevsNFTContract = CRYPTO_DEV_NFT_CONTRACT_ADDRESS;
+  // Address of the Crypto Devs TOKEN contract that you deployed in the previous module
+  const cryptoDevsTokenAddress = CRYPTO_DEV_TOKEN_CONTRACT_ADDRESS;
 
   /*
     A ContractFactory in ethers.js is an abstraction used to deploy new smart contracts,
     so cryptoDevsTokenContract here is a factory for instances of our CryptoDevToken contract.
     */
-  const cryptoDevsTokenContract = await ethers.getContractFactory(
-    "CryptoDevToken"
+  const exchangeContract= await ethers.getContractFactory(
+    "Exchange"
   );
 
   // deploy the contract
-  const deployedCryptoDevsTokenContract = await cryptoDevsTokenContract.deploy(
-    cryptoDevsNFTContract
+  const deployedExchangeContract = await exchangeContract.deploy(
+    cryptoDevsTokenAddress
   );
+  await deployedExchangeContract.deployed();
 
   // print the address of the deployed contract
   console.log(
-    "Crypto Devs Token Contract Address Deployed successfully:",
+    "Exchange Contract Address Deployed Successfully TO:",
     deployedCryptoDevsTokenContract.address
   );
 }
